@@ -1,0 +1,153 @@
+@charset "utf-8";
+@charset "utf-8";
+html {
+    font-size: 50%;
+}
+body {
+    font-family: Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
+    color: #1F1B1D;
+    text-align: center;
+    font-size: 1.4em;
+    letter-spacing: 0.03em;
+    -webkit-text-size-adjust: 100%;
+    animation-name: hide;
+    animation-duration: 3s;
+    background-color: #1F1B1D;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+.wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5px;
+}
+header {
+    margin-bottom: 20px;
+}
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #F8B13C;
+}
+.box {
+    position: relative;
+    margin: 0 auto;
+    text-align: left;
+    margin-bottom: 30px;
+    border: solid 2px #F8B13C;
+    border-radius: 5px;
+    padding: 20px 10px 10px 10px;
+}
+.howtouse, .data-management, .kintai-list {
+    display: none;
+}
+.box h2 {
+    position: absolute;
+    display: inline-block;
+    top: -13px;
+    left: 10px;
+    padding: 0 9px;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    text-align: left;
+    background-color: #fff;
+    color: #F8B13C;
+    letter-spacing: 0.1em;
+}
+.block {
+    margin-bottom: 10px;
+}
+
+.user-input {
+    width: 170px;
+    margin-right: 20px;
+    border-bottom: solid 1px #F8B13C;
+    padding: 1px 5px;
+}
+
+.kinmu-input {
+    width: 50px;
+    border-bottom: solid 1px #F8B13C;
+    text-align: center;
+}
+
+.user-button {
+    display: none;
+}
+
+#year-month {
+    font-size: 1.5em;
+    color: #F8B13C;
+}
+#kintai-id {
+    display: none;
+}
+
+.element-hidden {
+    display: none;
+}
+
+/* table */
+table {
+    border: solid 1px #F8B13C;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* table-header */
+thead th {
+    font-weight: bold;
+    text-align: center;
+    border: solid 1px #F8B13C;
+    border-bottom: double 3px #F8B13C;
+    padding: 5px;
+    vertical-align: middle;
+}
+thead th.date, thead th.day, thead th.type {
+    width: 4%;
+}
+thead th.start, thead th.end, thead th.break {
+    width: 7%;
+}
+thead th.normal, thead th.over, thead th.holi, thead th.mid {
+    width: 5%;
+}
+thead th.comment {
+    width:  25%;
+}
+
+/* table-body */
+tbody td {
+    text-align: center;
+    border: solid 1px #F8B13C;
+    vertical-align: middle;
+    height: 22px;
+}
+tbody td.comment {
+    text-align: left;
+}
+tbody td.comment input {
+    overflow-wrap: break-word;
+}
+tbody td select {
+    width: 90%;
+    height: 90%;
+    margin: 0px 0px;
+    cursor: pointer;
+}
+tbody td input {
+    width: 98%;
+    height: 100%;
+    margin: 0px 3px;
+}
+
+/* table-footer */
+tfoot td {
+    text-align: center;
+    border: solid 1px #F8B13C;
+    border-top: double 3px #F8B13C;
+    padding: 5px;
+}

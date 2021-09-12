@@ -1,0 +1,282 @@
+@charset "utf-8";
+html {
+    font-size: 62.5%;
+}
+body {
+    font-family: Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
+    color: #F9DEB1;
+    text-align: center;
+    font-size: 1.4em;
+    letter-spacing: 0.03em;
+    -webkit-text-size-adjust: 100%;
+    animation-name: hide;
+    animation-duration: 3s;
+    background-color: #1F1B1D;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+*::selection {
+    background-color: #F8B13C;
+    color: #F9DEB1;
+}
+.wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5px;
+}
+header {
+    margin-bottom: 20px;
+}
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #F8B13C;
+}
+.box {
+    position: relative;
+    margin: 0 auto;
+    text-align: left;
+    margin-bottom: 30px;
+    border: solid 2px #F8B13C;
+    border-radius: 5px;
+    padding: 20px 10px 10px 10px;
+}
+.box p {
+    overflow-wrap: break-word;
+    letter-spacing: 0.2em;
+    line-height: 1.5em;
+}
+.box h2 {
+    position: absolute;
+    display: inline-block;
+    top: -13px;
+    left: 10px;
+    padding: 0 9px;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    text-align: left;
+    background-color: #1F1B1D;
+    color: #F8B13C;
+    letter-spacing: 0.1em;
+}
+.block {
+    margin-bottom: 10px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.user-input {
+    width: 250px;
+    margin-right: 20px;
+    border-bottom: solid 1px #F8B13C;
+    padding: 1px 5px;
+}
+.user-input:hover {
+    background-color: lightskyblue;
+}
+
+.kinmu-input {
+    width: 50px;
+    border-bottom: solid 1px #F8B13C;
+    text-align: center;
+}
+.kinmu-input:hover {
+    background-color: lightskyblue;
+}
+
+.user-button {
+    border: solid 1px #1F1B1D;
+    border-radius: 3px;
+    background-color: #F8B13C;
+    padding: 4px 5px;
+    color: #1F1B1D;
+}
+.user-button:hover {
+    background-color: lightskyblue;
+}
+.user-button:active {
+    background-color: #454545;
+    color: #F9DEB1;
+}
+
+.select-box {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+}
+.select-box::before {
+    position: absolute;
+	top: 9px;
+	right: 2px;
+	width: 0;
+	height: 0;
+	padding: 0;
+	content: '';
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #F8B13C;
+	pointer-events: none;
+}
+.user-select {
+    border: solid 1px #F8B13C;
+    background-color: #1F1B1D;
+    border-radius: 3px;
+    width: 100%;
+    padding: 3px 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.user-datepicker {
+    border: solid 1px #F8B13C;
+    border-radius: 3px;
+    width: 150px;
+    padding: 1px 5px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+#year-month {
+    font-size: 1.5em;
+    color: #F8B13C;
+}
+#kintai-id {
+    display: none;
+}
+
+.element-hidden {
+    display: none;
+}
+
+/* table */
+table {
+    border: solid 1px #F8B13C;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* table-header */
+thead th {
+    font-weight: bold;
+    text-align: center;
+    border: solid 1px #F8B13C;
+    border-bottom: double 3px #F8B13C;
+    padding: 5px;
+    vertical-align: middle;
+}
+thead th.date, thead th.day, thead th.type {
+    width: 4%;
+}
+thead th.start, thead th.end, thead th.break {
+    width: 8%;
+}
+thead th.normal, thead th.over, thead th.holi, thead th.mid {
+    width: 5%;
+}
+thead th.comment {
+    width:  25%;
+}
+
+/* table-body */
+tbody td {
+    text-align: center;
+    border: solid 1px #F8B13C;
+    vertical-align: middle;
+}
+tbody td.comment {
+    text-align: left;
+}
+tbody td.comment input {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+tbody tr.weekday td.type {
+    position: relative;
+}
+tbody tr.weekday td.type::before {
+    position: absolute;
+	top: 7px;
+	right: 2px;
+	width: 0;
+	height: 0;
+	padding: 0;
+	content: '';
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #F8B13C;
+	pointer-events: none;
+}
+tbody td select {
+    width: 90%;
+    height: 100%;
+    margin: 0px 2px;
+    cursor: pointer;
+}
+tbody td input {
+    width: 98%;
+    height: 100%;
+    margin: 0px 3px;
+}
+tbody td.start input, tbody td.end input, tbody td.break input {
+    width: 50%;
+}
+.error {
+    background-color: red;
+}
+tbody td .user-button {
+    border: solid 0px #F9DEB1;
+    border-radius: 3px;
+    background-color: #F8B13C;
+    padding: 0px 5px;
+    color: #1F1B1D;
+    margin: 2px 0px;
+}
+tbody td .user-button:hover {
+    background-color: lightskyblue;
+}
+tbody td .user-button:active {
+    background-color: #454545;
+    color: #F9DEB1;
+}
+
+tbody td input:hover {
+    background-color: lightskyblue;
+}
+tbody tr.saturday {
+    background-color: lightblue;
+    color: #1F1B1D;
+}
+tbody tr.sunday {
+    background-color: lightcoral;
+    color: #1F1B1D;
+}
+tbody tr.holiday {
+    background-color: lightcoral;
+    color: #1F1B1D;
+}
+tbody tr.weekday td select {
+    background-color: #1F1B1D;
+    color: #F9DEB1;
+}
+tbody tr.holiday td select {
+    background-color: lightcoral;
+    color: #1F1B1D;
+}
+
+/* table-footer */
+tfoot td {
+    text-align: center;
+    border: solid 1px #F8B13C;
+    border-top: double 3px #F8B13C;
+    background-color: #454545;
+    padding: 5px;
+}
+tfoot .sum-data {
+    background-color: #1F1B1D;
+}

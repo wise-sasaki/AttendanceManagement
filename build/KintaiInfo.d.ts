@@ -1,0 +1,32 @@
+import { DateInfo } from "./DateInfo";
+export declare class KintaiInfo {
+    private _kintaiId;
+    private _company;
+    private _deploy;
+    private _name;
+    private _anken;
+    private _teiziStart;
+    private _teiziEnd;
+    private _qk;
+    private _dateList;
+    set kintaiId(kintaiId: string);
+    get kintaiId(): string;
+    set company(company: string);
+    get company(): string;
+    set deploy(deploy: string);
+    get deploy(): string;
+    set name(name: string);
+    get name(): string;
+    set anken(anken: string);
+    get anken(): string;
+    set teiziStart(teiziStart: string);
+    get teiziStart(): string;
+    set teiziEnd(teiziEnd: string);
+    get teiziEnd(): string;
+    set qk(qk: string);
+    get qk(): string;
+    set dateList(dateList: Array<DateInfo>);
+    get dateList(): Array<DateInfo>;
+    getObject(): any;
+    setObject(object: any): void;
+}
