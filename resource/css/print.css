@@ -118,6 +118,9 @@ thead th.normal, thead th.over, thead th.holi, thead th.mid {
 thead th.comment {
     width:  25%;
 }
+thead th.type, thead th.break, thead th.holi, thead th.mid {
+    border-right: double 3px #F8B13C;
+}
 
 /* table-body */
 tbody td {
@@ -126,11 +129,16 @@ tbody td {
     vertical-align: middle;
     height: 22px;
 }
+tbody td.type, tbody td.break, tbody td.holi, tbody td.mid {
+    border-right: double 3px #F8B13C;
+}
 tbody td.comment {
     text-align: left;
 }
 tbody td.comment input {
-    overflow-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 tbody td select {
     width: 90%;
@@ -150,4 +158,7 @@ tfoot td {
     border: solid 1px #F8B13C;
     border-top: double 3px #F8B13C;
     padding: 5px;
+}
+tfoot td#sum, tfoot td#holi-sum, tfoot td#mid-sum {
+    border-right: double 3px #F8B13C;
 }

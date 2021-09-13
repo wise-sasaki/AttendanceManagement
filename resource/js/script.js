@@ -218,7 +218,7 @@ var CreateKintaiTable = (function () {
         newTheadThDay.textContent = "曜日";
         newTheadTr.appendChild(newTheadThDay);
         var newTheadThHoly = document.createElement("th");
-        newTheadThHoly.classList.add("holi");
+        newTheadThHoly.classList.add("type");
         newTheadThHoly.innerHTML = "休日<br>祝日";
         newTheadTr.appendChild(newTheadThHoly);
         var newTheadThStart = document.createElement("th");
@@ -247,7 +247,7 @@ var CreateKintaiTable = (function () {
         newTheadTr.appendChild(newTheadThHoli);
         var newTheadThMid = document.createElement("th");
         newTheadThMid.classList.add("mid");
-        newTheadThMid.innerHTML = "深夜<br>時間";
+        newTheadThMid.innerHTML = "深夜<br>(内訳)";
         newTheadTr.appendChild(newTheadThMid);
         var newTheadThComment = document.createElement("th");
         newTheadThComment.classList.add("comment");
@@ -434,6 +434,7 @@ var CreateKintaiTable = (function () {
                     _this._computeSum();
                     return;
                 }
+                _this._computeRow(num);
                 _this._computeSum();
             });
             newTheadTdEnd.appendChild(newTheadTdEndInput);
@@ -475,6 +476,7 @@ var CreateKintaiTable = (function () {
                     _this._computeSum();
                     return;
                 }
+                _this._computeRow(num);
                 _this._computeSum();
             });
             newTheadTdBreak.appendChild(newTheadTdBreakInput);
@@ -601,21 +603,42 @@ var CreateKintaiTable = (function () {
             var start = startValue.split(':');
             var end = endValue.split(':');
             var qk = breakValue.split(':');
-            var sum = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
-            console.log("sum[" + sum + "]");
-            if (sum > 8 && (row === null || row === void 0 ? void 0 : row.classList.contains("weekday")) && parseInt(end[0]) < 22) {
+            var sumTime = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
+            console.log("sumTime[" + sumTime + "]");
+            console.log("h[" + Math.floor(sumTime) + "]");
+            console.log("m[" + parseFloat("0." + (String(sumTime)).split(".")[1]) * 60 + "]");
+            if (sumTime > 8 && (row === null || row === void 0 ? void 0 : row.classList.contains("weekday"))) {
                 normal.textContent = "08:00";
-                var h = (sum - 8) / 1;
-                var m = (((sum - 8) % 1) / 0.25) * 15;
+                var h = Math.floor(sumTime - 8);
+                var m = parseFloat("0." + (String(sumTime - 8)).split(".")[1]) * 60;
                 over.textContent = h.toString().padStart(2, "0") + ":" + m.toString().padStart(2, "0");
                 holi.textContent = "00:00";
-                mid.textContent = "00:00";
             }
-            else if (sum <= 8 && (row === null || row === void 0 ? void 0 : row.classList.contains("weekday"))) {
-                normal.textContent = "08:00";
+            else if (sumTime <= 8 && (row === null || row === void 0 ? void 0 : row.classList.contains("weekday"))) {
+                var h = Math.floor(sumTime);
+                var m = parseFloat("0." + (String(sumTime)).split(".")[1]) * 60;
+                normal.textContent = h.toString().padStart(2, "0") + ":" + m.toString().padStart(2, "0");
                 over.textContent = "00:00";
                 holi.textContent = "00:00";
-                mid.textContent = "00:00";
+            }
+            else if ((row === null || row === void 0 ? void 0 : row.classList.contains("saturday")) || (row === null || row === void 0 ? void 0 : row.classList.contains("sunday")) || (row === null || row === void 0 ? void 0 : row.classList.contains("holiday"))) {
+                var h = Math.floor(sumTime);
+                var m = parseFloat("0." + (String(sumTime)).split(".")[1]) * 60;
+                normal.textContent = "00:00";
+                over.textContent = "00:00";
+                holi.textContent = h.toString().padStart(2, "0") + ":" + m.toString().padStart(2, "0");
+            }
+            if (parseInt(start[0]) >= 22 || parseInt(start[0]) < 6) {
+                var midTime = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
+                var h = Math.floor(midTime);
+                var m = parseFloat("0." + (String(midTime)).split(".")[1]) * 60;
+                mid.textContent = h.toString().padStart(2, "0") + ":" + m.toString().padStart(2, "0");
+            }
+            else if (parseInt(end[0]) >= 22 || parseInt(end[0]) < 6) {
+                var midTime = parseInt(end[0]) - 22 + parseInt(end[1]) / 60;
+                var h = Math.floor(midTime);
+                var m = parseFloat("0." + (String(midTime)).split(".")[1]) * 60;
+                mid.textContent = h.toString().padStart(2, "0") + ":" + m.toString().padStart(2, "0");
             }
         }
     };
@@ -657,7 +680,7 @@ var CreateKintaiTable = (function () {
         overSumElement.textContent = overSum.toFixed(2);
         holiSumElement.textContent = holiSum.toFixed(2);
         midSumElement.textContent = midSum.toFixed(2);
-        sumElement.textContent = (normalSum + overSum + holiSum + midSum).toFixed(2);
+        sumElement.textContent = (normalSum + overSum + holiSum).toFixed(2);
     };
     return CreateKintaiTable;
 }());

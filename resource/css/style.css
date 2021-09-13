@@ -181,12 +181,18 @@ thead th.normal, thead th.over, thead th.holi, thead th.mid {
 thead th.comment {
     width:  25%;
 }
+thead th.type, thead th.break, thead th.holi, thead th.mid {
+    border-right: double 3px #F8B13C;
+}
 
 /* table-body */
 tbody td {
     text-align: center;
     border: solid 1px #F8B13C;
     vertical-align: middle;
+}
+tbody td.type, tbody td.break, tbody td.holi, tbody td.mid {
+    border-right: double 3px #F8B13C;
 }
 tbody td.comment {
     text-align: left;
@@ -276,6 +282,9 @@ tfoot td {
     border-top: double 3px #F8B13C;
     background-color: #454545;
     padding: 5px;
+}
+tfoot td#sum, tfoot td#holi-sum, tfoot td#mid-sum {
+    border-right: double 3px #F8B13C;
 }
 tfoot .sum-data {
     background-color: #1F1B1D;

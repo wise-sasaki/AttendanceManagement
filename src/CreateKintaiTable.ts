@@ -42,18 +42,39 @@ export class CreateKintaiTable {
         teiziStart.value = kintaiInfo.teiziStart;
         teiziStart.addEventListener("change", () => {
             CheckUtil.inputCheck(teiziStart);
+            // 行計算
+            const rows = document.querySelectorAll("table tbody tr");
+            for (let i = 0; i < rows.length; i++) {
+                this._computeRow(i.toString());
+            }
+            // 合計値計算
+            this._computeSum();
         });
 
         const teiziEnd = document.querySelector("input#teizi-end") as HTMLInputElement;
         teiziEnd.value = kintaiInfo.teiziEnd;
         teiziEnd.addEventListener("change", () => {
             CheckUtil.inputCheck(teiziEnd);
+            // 行計算
+            const rows = document.querySelectorAll("table tbody tr");
+            for (let i = 0; i < rows.length; i++) {
+                this._computeRow(i.toString());
+            }
+            // 合計値計算
+            this._computeSum();
         });
 
         const qk = document.querySelector("input#qk") as HTMLInputElement;
         qk.value = kintaiInfo.qk;
         qk.addEventListener("change", () => {
             CheckUtil.inputCheck(qk);
+            // 行計算
+            const rows = document.querySelectorAll("table tbody tr");
+            for (let i = 0; i < rows.length; i++) {
+                this._computeRow(i.toString());
+            }
+            // 合計値計算
+            this._computeSum();
         });
     }
 
@@ -105,7 +126,7 @@ export class CreateKintaiTable {
         newTheadThDay.textContent = "曜日";
         newTheadTr.appendChild(newTheadThDay);
         const newTheadThHoly = document.createElement("th");
-        newTheadThHoly.classList.add("holi");
+        newTheadThHoly.classList.add("type");
         newTheadThHoly.innerHTML = "休日<br>祝日";
         newTheadTr.appendChild(newTheadThHoly);
         const newTheadThStart = document.createElement("th");
@@ -134,7 +155,7 @@ export class CreateKintaiTable {
         newTheadTr.appendChild(newTheadThHoli);
         const newTheadThMid = document.createElement("th");
         newTheadThMid.classList.add("mid");
-        newTheadThMid.innerHTML = "深夜<br>時間";
+        newTheadThMid.innerHTML = "深夜<br>(内訳)";
         newTheadTr.appendChild(newTheadThMid);
         const newTheadThComment = document.createElement("th");
         newTheadThComment.classList.add("comment");
@@ -336,7 +357,7 @@ export class CreateKintaiTable {
                 }
 
                 // 行合計
-
+                this._computeRow(num);
                 // 合計値計算
                 this._computeSum();
             });
@@ -389,7 +410,7 @@ export class CreateKintaiTable {
                 }
 
                 // 行合計
-
+                this._computeRow(num);
                 // 合計値計算
                 this._computeSum();
             });
@@ -522,21 +543,45 @@ export class CreateKintaiTable {
             const start = startValue.split(':');
             const end = endValue.split(':');
             const qk = breakValue.split(':');
-            let sum = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
-            console.log(`sum[${sum}]`);
-            if (sum > 8 && row?.classList.contains("weekday") && parseInt(end[0]) < 22) {
-                // 8時間以上 && 平日 && 深夜残業なし
+            let sumTime = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
+            console.log(`sumTime[${sumTime}]`);
+            console.log(`h[${Math.floor(sumTime)}]`);
+            console.log(`m[${parseFloat("0." + (String(sumTime)).split(".")[1]) * 60}]`);
+            if (sumTime > 8 && row?.classList.contains("weekday")) {
+                // 8時間以上 && 平日
                 normal.textContent = "08:00";
-                const h = (sum - 8) / 1;
-                const m = (((sum - 8) % 1) / 0.25) * 15;
+                const h = Math.floor(sumTime - 8);
+                const m = parseFloat("0." + (String(sumTime - 8)).split(".")[1]) * 60;
                 over.textContent = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
                 holi.textContent = "00:00";
-                mid.textContent = "00:00";
-            } else if (sum <= 8 && row?.classList.contains("weekday")) {
-                normal.textContent = "08:00";
+            } else if (sumTime <= 8 && row?.classList.contains("weekday")) {
+                // 8時間未満 && 平日
+                const h = Math.floor(sumTime);
+                const m = parseFloat("0." + (String(sumTime)).split(".")[1]) * 60;
+                normal.textContent = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
                 over.textContent = "00:00";
                 holi.textContent = "00:00";
-                mid.textContent = "00:00";
+            } else if (row?.classList.contains("saturday") || row?.classList.contains("sunday") || row?.classList.contains("holiday")) {
+                // 休日
+                const h = Math.floor(sumTime);
+                const m = parseFloat("0." + (String(sumTime)).split(".")[1]) * 60;
+                normal.textContent = "00:00";
+                over.textContent = "00:00";
+                holi.textContent = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+            }
+
+            if (parseInt(start[0]) >= 22 || parseInt(start[0]) < 6) {
+                // 深夜作業の場合
+                const midTime = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
+                const h = Math.floor(midTime);
+                const m = parseFloat("0." + (String(midTime)).split(".")[1]) * 60;
+                mid.textContent = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+            } else if (parseInt(end[0]) >= 22 || parseInt(end[0]) < 6) {
+                // 深夜作業の場合
+                const midTime = parseInt(end[0]) - 22 + parseInt(end[1]) / 60;
+                const h = Math.floor(midTime);
+                const m = parseFloat("0." + (String(midTime)).split(".")[1]) * 60;
+                mid.textContent = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
             }
         }
     }
@@ -580,6 +625,6 @@ export class CreateKintaiTable {
         holiSumElement.textContent = holiSum.toFixed(2);
         midSumElement.textContent = midSum.toFixed(2);
 
-        sumElement.textContent = (normalSum + overSum + holiSum + midSum).toFixed(2);
+        sumElement.textContent = (normalSum + overSum + holiSum).toFixed(2);
     }
 }
