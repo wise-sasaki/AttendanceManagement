@@ -9,8 +9,6 @@ body {
     font-size: 1.4em;
     letter-spacing: 0.03em;
     -webkit-text-size-adjust: 100%;
-    animation-name: hide;
-    animation-duration: 3s;
     background-color: #1F1B1D;
 }
 *,
@@ -295,7 +293,7 @@ tfoot .sum-data {
     background-color: #1F1B1D;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (min-width:321px) and (max-width:480px) {
 /* @media only screen
     and (max-device-width:320px)
     and (orientation:portrait) { */
