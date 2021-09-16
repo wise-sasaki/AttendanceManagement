@@ -60,6 +60,10 @@ h1 {
 .block {
     margin-bottom: 10px;
 }
+.user-data-box {
+    display: inline;
+    margin-bottom: 15px;
+}
 
 .user-input {
     width: 170px;

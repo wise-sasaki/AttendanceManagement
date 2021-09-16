@@ -63,6 +63,10 @@ h1 {
 .block {
     margin-bottom: 10px;
 }
+.user-data-box {
+    display: inline;
+    margin-bottom: 15px;
+}
 
 input[type="file"] {
     display: none;
@@ -134,6 +138,7 @@ input[type="file"] {
     border: solid 1px #F8B13C;
     border-radius: 3px;
     width: 150px;
+    height: 25px;
     padding: 1px 5px;
     margin: 0px 5px;
     cursor: pointer;
@@ -294,13 +299,11 @@ tfoot .sum-data {
 }
 
 @media screen and (min-width:321px) and (max-width:480px) {
-/* @media only screen
-    and (max-device-width:320px)
-    and (orientation:portrait) { */
     .data-management {
         display: none;
     }
-    .media-400-box {
+    .user-data-box {
+        display: block;
         width: 100%;
         margin-bottom: 15px;
     }

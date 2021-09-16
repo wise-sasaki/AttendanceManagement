@@ -33,7 +33,7 @@ export class DataSelectList {
         for (let i = 0; i < list.length; i++) {
             const kintaiOption = document.createElement("option");
             kintaiOption.value = list[i].kintaiId;
-            kintaiOption.textContent = `${list[i].kintaiId.substring(0, 4)}年${list[i].kintaiId.substring(5, 6)}月度`;
+            kintaiOption.textContent = `${list[i].kintaiId.substring(0, 4)}年${list[i].kintaiId.substring(4, 6)}月度`;
             if (list[i].kintaiId === kintaiId) {
                 kintaiOption.selected = true;
             }

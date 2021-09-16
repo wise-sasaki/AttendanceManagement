@@ -1038,7 +1038,7 @@ var DataSelectList = (function () {
                         for (i = 0; i < list.length; i++) {
                             kintaiOption = document.createElement("option");
                             kintaiOption.value = list[i].kintaiId;
-                            kintaiOption.textContent = list[i].kintaiId.substring(0, 4) + "\u5E74" + list[i].kintaiId.substring(5, 6) + "\u6708\u5EA6";
+                            kintaiOption.textContent = list[i].kintaiId.substring(0, 4) + "\u5E74" + list[i].kintaiId.substring(4, 6) + "\u6708\u5EA6";
                             if (list[i].kintaiId === kintaiId) {
                                 kintaiOption.selected = true;
                             }
