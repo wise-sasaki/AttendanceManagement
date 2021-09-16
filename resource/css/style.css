@@ -295,10 +295,10 @@ tfoot .sum-data {
     background-color: #1F1B1D;
 }
 
-/* @media screen and (max-width: 400px), */
-@media only screen
+@media screen and (max-width: 400px) {
+/* @media only screen
     and (max-device-width:320px)
-    and (orientation:portrait) {
+    and (orientation:portrait) { */
     .data-management {
         display: none;
     }
