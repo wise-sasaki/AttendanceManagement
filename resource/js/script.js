@@ -2,21 +2,21 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/BulkInput.ts":
-/*!**************************!*\
-  !*** ./src/BulkInput.ts ***!
-  \**************************/
+/***/ "./src/BulkInputButton.ts":
+/*!********************************!*\
+  !*** ./src/BulkInputButton.ts ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "BulkInput": () => (/* binding */ BulkInput)
+/* harmony export */   "BulkInputButton": () => (/* binding */ BulkInputButton)
 /* harmony export */ });
-var BulkInput = (function () {
-    function BulkInput() {
+var BulkInputButton = (function () {
+    function BulkInputButton() {
         this._addEventListener();
     }
-    BulkInput.prototype._addEventListener = function () {
+    BulkInputButton.prototype._addEventListener = function () {
         var button = document.getElementById("bulk-data");
         button === null || button === void 0 ? void 0 : button.addEventListener("click", function (event) {
             var rows = document.querySelectorAll("table tbody tr");
@@ -33,7 +33,7 @@ var BulkInput = (function () {
             }
         });
     };
-    return BulkInput;
+    return BulkInputButton;
 }());
 
 
@@ -166,22 +166,38 @@ var CreateKintaiTable = (function () {
         name.value = kintaiInfo.name;
     };
     CreateKintaiTable.prototype._ankenData = function (kintaiInfo) {
+        var _this = this;
         var anken = document.querySelector("input#anken");
         anken.value = kintaiInfo.anken;
         var teiziStart = document.querySelector("input#teizi-start");
         teiziStart.value = kintaiInfo.teiziStart;
         teiziStart.addEventListener("change", function () {
             _CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.inputCheck(teiziStart);
+            var rows = document.querySelectorAll("table tbody tr");
+            for (var i = 0; i < rows.length; i++) {
+                _this._computeRow(i.toString());
+            }
+            _this._computeSum();
         });
         var teiziEnd = document.querySelector("input#teizi-end");
         teiziEnd.value = kintaiInfo.teiziEnd;
         teiziEnd.addEventListener("change", function () {
             _CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.inputCheck(teiziEnd);
+            var rows = document.querySelectorAll("table tbody tr");
+            for (var i = 0; i < rows.length; i++) {
+                _this._computeRow(i.toString());
+            }
+            _this._computeSum();
         });
         var qk = document.querySelector("input#qk");
         qk.value = kintaiInfo.qk;
         qk.addEventListener("change", function () {
             _CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.inputCheck(qk);
+            var rows = document.querySelectorAll("table tbody tr");
+            for (var i = 0; i < rows.length; i++) {
+                _this._computeRow(i.toString());
+            }
+            _this._computeSum();
         });
     };
     CreateKintaiTable.prototype._kintaiTable = function (kintaiInfo) {
@@ -587,7 +603,7 @@ var CreateKintaiTable = (function () {
         var over = document.querySelector("#over-" + num);
         var holi = document.querySelector("#holi-" + num);
         var mid = document.querySelector("#mid-" + num);
-        if (_CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.isEmpty(startValue) && _CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.isEmpty(endValue) && _CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.isEmpty(breakValue)) {
+        if (_CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.isEmpty(startValue) || _CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.isEmpty(endValue) || _CheckUtil__WEBPACK_IMPORTED_MODULE_0__.CheckUtil.isEmpty(breakValue)) {
             normal.textContent = "00:00";
             over.textContent = "00:00";
             holi.textContent = "00:00";
@@ -604,9 +620,6 @@ var CreateKintaiTable = (function () {
             var end = endValue.split(':');
             var qk = breakValue.split(':');
             var sumTime = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
-            console.log("sumTime[" + sumTime + "]");
-            console.log("h[" + Math.floor(sumTime) + "]");
-            console.log("m[" + parseFloat("0." + (String(sumTime)).split(".")[1]) * 60 + "]");
             if (sumTime > 8 && (row === null || row === void 0 ? void 0 : row.classList.contains("weekday"))) {
                 normal.textContent = "08:00";
                 var h = Math.floor(sumTime - 8);
@@ -939,8 +952,8 @@ var DAO = (function () {
             });
         });
     };
-    DAO.DB_NAME = "kintai";
-    DAO.STORE_NAME = "month";
+    DAO.DB_NAME = "KintaiIndexedDB";
+    DAO.STORE_NAME = "data";
     DAO.KEY_NAME = "kintaiId";
     return DAO;
 }());
@@ -1972,7 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DataSelectList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataSelectList */ "./src/DataSelectList.ts");
 /* harmony import */ var _NewData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewData */ "./src/NewData.ts");
 /* harmony import */ var _UpdateData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UpdateData */ "./src/UpdateData.ts");
-/* harmony import */ var _BulkInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BulkInput */ "./src/BulkInput.ts");
+/* harmony import */ var _BulkInputButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BulkInputButton */ "./src/BulkInputButton.ts");
 /* harmony import */ var _OutputJsonButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./OutputJsonButton */ "./src/OutputJsonButton.ts");
 /* harmony import */ var _InputJsonButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./InputJsonButton */ "./src/InputJsonButton.ts");
 
@@ -1991,15 +2004,12 @@ var Main = (function () {
             alert("このブラウザーは安定版の IndexedDB を対応していません。IndexedDB の機能は利用できません。");
             return;
         }
-        this._addEventListener();
         new _DataSelectList__WEBPACK_IMPORTED_MODULE_1__.DataSelectList("");
         new _NewData__WEBPACK_IMPORTED_MODULE_2__.NewData();
         new _UpdateData__WEBPACK_IMPORTED_MODULE_3__.UpdateData();
-        new _BulkInput__WEBPACK_IMPORTED_MODULE_4__.BulkInput();
+        new _BulkInputButton__WEBPACK_IMPORTED_MODULE_4__.BulkInputButton();
         new _OutputJsonButton__WEBPACK_IMPORTED_MODULE_5__.OutputJsonButton();
         new _InputJsonButton__WEBPACK_IMPORTED_MODULE_6__.InputJsonButton();
-    };
-    Main.prototype._addEventListener = function () {
     };
     return Main;
 }());

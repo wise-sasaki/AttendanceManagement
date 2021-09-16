@@ -1,13 +1,25 @@
 import { DateInfo } from "./DateInfo";
+/**
+ * 勤怠情報データクラス
+ */
 export class KintaiInfo {
+    /** 勤怠ID */
     private _kintaiId: string = "";
+    /** 会社名 */
     private _company: string = "";
+    /** 部署名 */
     private _deploy: string = "";
+    /** 氏名 */
     private _name: string = "";
+    /** 案件名 */
     private _anken: string = "";
+    /** 所定就業開始時間 */
     private _teiziStart: string = "";
+    /** 所定就業終了時間 */
     private _teiziEnd: string = "";
+    /** 所定就業休憩時間 */
     private _qk: string = "";
+    /** 日付別勤怠データリスト */
     private _dateList: Array<DateInfo> = [];
     set kintaiId(kintaiId: string) {
         this._kintaiId = kintaiId;

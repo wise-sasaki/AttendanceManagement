@@ -2,6 +2,11 @@ import { DAO } from "./DAO";
 import { KintaiInfo } from "./KintaiInfo";
 import { DateInfo } from "./DateInfo";
 import { DataSelectList } from "./DataSelectList";
+/**
+ * JSONデータ読込ボタンクラス
+ * 
+ * ローカルファイルを読み込んでindexedDBに登録する。
+ */
 export class InputJsonButton {
     constructor() {
         this._addEventListener();

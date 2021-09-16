@@ -1,12 +1,19 @@
 import { DAO } from "./DAO";
 import { KintaiInfo } from "./KintaiInfo";
 import { CreateKintaiTable } from "./CreateKintaiTable";
+/**
+ * 勤怠データ選択リスト作成クラス
+ */
 export class DataSelectList {
     constructor(kintaiId: string) {
         this._ListCreate(kintaiId);
         this._addEventListener()
     }
 
+    /**
+     * 勤怠データ選択リスト作成処理
+     * @param kintaiId 勤怠データ
+     */
     private async _ListCreate(kintaiId: string): Promise<void> {
         // 勤怠データ一覧の削除
         const element = document.getElementById("list") as HTMLSelectElement;
@@ -33,7 +40,12 @@ export class DataSelectList {
             element?.appendChild(kintaiOption);
         }
     }
+
+    /**
+     * イベントハンドラー登録
+     */
     private _addEventListener(): void {
+        // インスタンス生成ごとに画面のリストボックスのイベント登録を更新する。
         const list = document.getElementById("list");
         const changeEvent = async (e: any) => {
             const key = e.target.value;

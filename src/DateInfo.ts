@@ -1,3 +1,6 @@
+/**
+ * 日付別勤怠データリスト
+ */
 export class DateInfo {
     private _date: Date = new Date();
     private _type: string = "";

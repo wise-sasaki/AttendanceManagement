@@ -2,10 +2,17 @@ import { DAO } from "./DAO";
 import { DateInfo } from "./DateInfo";
 import { KintaiInfo } from "./KintaiInfo";
 import { CheckUtil } from "./CheckUtil";
+/**
+ * 勤怠データ更新クラス
+ */
 export class UpdateData {
     constructor() {
         this._addEventListener();
     }
+
+    /**
+     * イベントハンドラー登録処理
+     */
     private _addEventListener(): void {
         const saveButton = document.querySelector("#save");
         saveButton?.addEventListener("click", async () => {

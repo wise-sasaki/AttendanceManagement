@@ -1,4 +1,11 @@
-export class BulkInput {
+/**
+ * 定時一括入力ボタンクラス
+ * 
+ * 勤怠データを所定就業時間および休憩時間に合わせて一括で入力する機能です。
+ * すでに入力がある項目に対しても全て上書きで入力します。
+ * 休日の日付に対しては入力が行われません。
+ */
+export class BulkInputButton {
     constructor() {
         this._addEventListener();
     }

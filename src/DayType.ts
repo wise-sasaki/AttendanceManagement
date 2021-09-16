@@ -1,3 +1,6 @@
+/**
+ * 曜日区分
+ */
 export enum DayType {
     SUNDAY,
     MONDAY,

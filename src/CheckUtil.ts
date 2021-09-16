@@ -1,6 +1,14 @@
+/**
+ * 入力チェッククラス
+ */
 export class CheckUtil {
     constructor() { }
 
+    /**
+     * input要素に対して入力チェック結果を反映する処理
+     * @param inputElement 入力チェック対象要素
+     * @returns true:チェックOK false:チェックNG
+     */
     public static inputCheck(inputElement: HTMLInputElement): boolean {
         inputElement.classList.remove("error");
         inputElement.title = "";
@@ -11,6 +19,12 @@ export class CheckUtil {
         }
         return true;
     }
+
+    /**
+     * 各種入力チェックを判定する処理
+     * @param value 入力値
+     * @returns true:チェックNG false:チェックOK
+     */
     public static isInputError(value: string): boolean {
         // 未入力チェック
         if (this.isEmpty(value)) {
@@ -32,11 +46,15 @@ export class CheckUtil {
         return false;
     }
 
+    /**
+     * 未入力チェックを判定する処理
+     * @param value 
+     * @returns 
+     */
     public static isEmpty(value: string) {
         if (value == null || value === "") {
             return true;
         }
         return false;
     }
-
 }

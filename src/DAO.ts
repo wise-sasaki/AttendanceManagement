@@ -1,17 +1,30 @@
 import { KintaiInfo } from "./KintaiInfo";
+/**
+ * indexedDBに対するデータアクセスクラス
+ */
 export class DAO {
-    private static readonly DB_NAME = "kintai"
-    private static readonly STORE_NAME = "month"
+    /** DB名 */
+    private static readonly DB_NAME = "KintaiIndexedDB"
+    /** ストア名 */
+    private static readonly STORE_NAME = "data"
+    /** プライマリーKey名 */
     private static readonly KEY_NAME = "kintaiId";
+    /** インスタンス */
     private static _instance: DAO;
+
     constructor() { }
 
+    /** インスタンス生成 */
     public static getInstance() {
         if (!this._instance) {
             this._instance = new DAO();
         }
         return this._instance;
     }
+
+    /**
+     * indexedDBの存在チェック
+     */
     public checkIndexedDB(): boolean {
         if (!window.indexedDB) {
             console.log("このブラウザーは安定版の IndexedDB を対応していません。IndexedDB の機能は利用できません。");
@@ -19,6 +32,12 @@ export class DAO {
         }
         return true;
     }
+
+    /**
+     * 勤怠データ作成処理
+     * @param kintaiInfo 勤怠データ
+     * @returns 
+     */
     public async create(kintaiInfo: KintaiInfo): Promise<void> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
@@ -27,7 +46,7 @@ export class DAO {
             request.onupgradeneeded = (event: Event) => {
                 db = (<IDBRequest>event.target).result;
 
-                // オブジェクトストア作成（インデックスのキーとして"kintaiId"を指定）
+                // オブジェクトストア作成（インデックスのキーを指定）
                 const store = db.createObjectStore(DAO.STORE_NAME, { keyPath: DAO.KEY_NAME });
                 // インデックスの作成
                 store.createIndex(DAO.KEY_NAME, DAO.KEY_NAME, { unique: true });
@@ -60,6 +79,12 @@ export class DAO {
             };
         });
     }
+
+    /**
+     * ID指定勤怠データ取得処理
+     * @param key プライマリーKey
+     * @returns 
+     */
     public async selectById(key: string): Promise<KintaiInfo> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
@@ -68,7 +93,7 @@ export class DAO {
             request.onupgradeneeded = (event: Event) => {
                 db = (<IDBRequest>event.target).result;
 
-                // オブジェクトストア作成（インデックスのキーとして'isbn'を指定）
+                // オブジェクトストア作成（インデックスのキーを指定）
                 const store = db.createObjectStore(DAO.STORE_NAME, { keyPath: DAO.KEY_NAME });
                 // インデックスの作成
                 store.createIndex(DAO.KEY_NAME, DAO.KEY_NAME, { unique: true });
@@ -105,6 +130,11 @@ export class DAO {
         });
 
     }
+
+    /**
+     * 勤怠データ一覧取得処理
+     * @returns 
+     */
     public async selectAll(): Promise<Array<KintaiInfo>> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
@@ -113,7 +143,7 @@ export class DAO {
             request.onupgradeneeded = (event: Event) => {
                 db = (<IDBRequest>event.target).result;
 
-                // オブジェクトストア作成（インデックスのキーとして'isbn'を指定）
+                // オブジェクトストア作成（インデックスのキーを指定）
                 const store = db.createObjectStore(DAO.STORE_NAME, { keyPath: DAO.KEY_NAME });
                 // インデックスの作成
                 store.createIndex(DAO.KEY_NAME, DAO.KEY_NAME, { unique: true });
@@ -150,6 +180,11 @@ export class DAO {
         });
 
     }
+    /**
+     * 勤怠データ更新処理
+     * @param kintaiInfo 勤怠データ
+     * @returns 
+     */
     public async update(kintaiInfo: KintaiInfo): Promise<void> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
@@ -158,7 +193,7 @@ export class DAO {
             request.onupgradeneeded = (event: Event) => {
                 db = (<IDBRequest>event.target).result;
     
-                // オブジェクトストア作成（インデックスのキーとして'isbn'を指定）
+                // オブジェクトストア作成（インデックスのキーを指定）
                 const store = db.createObjectStore(DAO.STORE_NAME, { keyPath: DAO.KEY_NAME });
                 // インデックスの作成
                 store.createIndex(DAO.KEY_NAME, DAO.KEY_NAME, { unique: true });
@@ -191,6 +226,12 @@ export class DAO {
             };
         });
     }
+
+    /**
+     * 勤怠データ削除処理
+     * @param key プライマリーKey
+     * @returns 
+     */
     public async delete(key: string): Promise<void> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
@@ -199,7 +240,7 @@ export class DAO {
             request.onupgradeneeded = (event: Event) => {
                 db = (<IDBRequest>event.target).result;
     
-                // オブジェクトストア作成（インデックスのキーとして'isbn'を指定）
+                // オブジェクトストア作成（インデックスのキーを指定）
                 const store = db.createObjectStore(DAO.STORE_NAME, { keyPath: DAO.KEY_NAME });
                 // インデックスの作成
                 store.createIndex(DAO.KEY_NAME, DAO.KEY_NAME, { unique: true });

@@ -156,8 +156,9 @@ input[type="file"] {
 /* table */
 table {
     border: solid 1px #F8B13C;
-    width: 100%;
+    min-width: 100%;
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
 /* table-header */
@@ -228,6 +229,9 @@ tbody td input {
     width: 98%;
     height: 100%;
     margin: 0px 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 tbody td.start input, tbody td.end input, tbody td.break input {
     width: 50%;
@@ -282,10 +286,42 @@ tfoot td {
     border-top: double 3px #F8B13C;
     background-color: #454545;
     padding: 5px;
+    vertical-align: middle;
 }
 tfoot td#sum, tfoot td#holi-sum, tfoot td#mid-sum {
     border-right: double 3px #F8B13C;
 }
 tfoot .sum-data {
     background-color: #1F1B1D;
+}
+
+@media screen and (max-width: 400px) {
+    .data-management {
+        display: none;
+    }
+    .media-400-box {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    #bulk-data, #save {
+        padding: 10px 15px;
+    }
+    .kintai-table {
+        overflow: scroll;
+    }
+    table {
+        width: 1000px;
+    }
+    table tr, table tr select, table tr input {
+        height: 40px;
+    }
+    tbody td.start input, tbody td.end input, tbody td.break input {
+        width: 90%;
+    }
+    .kintai-table button {
+        display: none;
+    }
+    #pdf-output {
+        display: none;
+    }
 }

@@ -2,20 +2,27 @@ import { KintaiInfo } from "./KintaiInfo";
 import { CheckUtil } from "./CheckUtil";
 import { DayType } from "./DayType";
 import { HolidayType } from "./HolidayType";
+/**
+ * 勤怠データテーブル作成クラス
+ */
 export class CreateKintaiTable {
     constructor() { }
 
+    /**
+     * 勤怠データテーブル作成処理
+     * @param kintaiInfo 勤怠データ
+     */
     public create(kintaiInfo: KintaiInfo): void {
-
         this._dateData(kintaiInfo);
-
         this._userData(kintaiInfo);
-
         this._ankenData(kintaiInfo);
-
         this._kintaiTable(kintaiInfo);
     }
 
+    /**
+     * 日付データ部作成
+     * @param kintaiInfo 勤怠データ
+     */
     private _dateData(kintaiInfo: KintaiInfo): void {
         const yearMonth = document.querySelector("span#year-month") as HTMLElement;
         yearMonth.textContent = `${kintaiInfo.kintaiId.substring(0, 4)}年${kintaiInfo.kintaiId.substring(4, 6)}月度`;
@@ -23,21 +30,34 @@ export class CreateKintaiTable {
         kintaiId.textContent = kintaiInfo.kintaiId;
     }
 
+    /**
+     * ユーザーデータ部作成
+     * @param kintaiInfo 勤怠データ
+     */
     private _userData(kintaiInfo: KintaiInfo): void {
+        // 会社名
         const company = document.querySelector("input#company") as HTMLInputElement;
         company.value = kintaiInfo.company;
 
+        // 部署名
         const deploy = document.querySelector("input#deploy") as HTMLInputElement;
         deploy.value = kintaiInfo.deploy;
 
+        // 氏名
         const name = document.querySelector("input#name") as HTMLInputElement;
         name.value = kintaiInfo.name;
     }
 
+    /**
+     * 案件データ部作成
+     * @param kintaiInfo 勤怠データ
+     */
     private _ankenData(kintaiInfo: KintaiInfo): void {
+        // 案件名
         const anken = document.querySelector("input#anken") as HTMLInputElement;
         anken.value = kintaiInfo.anken;
 
+        // 所定就業時間-開始
         const teiziStart = document.querySelector("input#teizi-start") as HTMLInputElement;
         teiziStart.value = kintaiInfo.teiziStart;
         teiziStart.addEventListener("change", () => {
@@ -51,6 +71,7 @@ export class CreateKintaiTable {
             this._computeSum();
         });
 
+        // 所定就業時間-終了
         const teiziEnd = document.querySelector("input#teizi-end") as HTMLInputElement;
         teiziEnd.value = kintaiInfo.teiziEnd;
         teiziEnd.addEventListener("change", () => {
@@ -64,6 +85,7 @@ export class CreateKintaiTable {
             this._computeSum();
         });
 
+        // 所定就業時間-休憩
         const qk = document.querySelector("input#qk") as HTMLInputElement;
         qk.value = kintaiInfo.qk;
         qk.addEventListener("change", () => {
@@ -78,6 +100,10 @@ export class CreateKintaiTable {
         });
     }
 
+    /**
+     * 勤怠テーブル部作成
+     * @param kintaiInfo 勤怠データ
+     */
     private _kintaiTable(kintaiInfo: KintaiInfo): void {
         const tableWrap = document.querySelector("div.kintai-table");
         // テーブルのクリア
@@ -114,49 +140,64 @@ export class CreateKintaiTable {
         this._computeSum();
     }
 
+    /**
+     * テーブルヘッダ作成
+     * @returns thead要素
+     */
     private _thead(): HTMLTableSectionElement {
         const newThead = document.createElement("thead");
         const newTheadTr = document.createElement("tr");
+        // 日付列
         const newTheadThDate = document.createElement("th");
         newTheadThDate.classList.add("date");
         newTheadThDate.textContent = "日付";
         newTheadTr.appendChild(newTheadThDate);
+        // 曜日列
         const newTheadThDay = document.createElement("th");
         newTheadThDay.classList.add("day");
         newTheadThDay.textContent = "曜日";
         newTheadTr.appendChild(newTheadThDay);
+        // 休日祝日列
         const newTheadThHoly = document.createElement("th");
         newTheadThHoly.classList.add("type");
         newTheadThHoly.innerHTML = "休日<br>祝日";
         newTheadTr.appendChild(newTheadThHoly);
+        // 開始時刻列
         const newTheadThStart = document.createElement("th");
         newTheadThStart.classList.add("start");
         newTheadThStart.textContent = "開始時刻";
         newTheadTr.appendChild(newTheadThStart);
+        // 終了時刻列
         const newTheadThEnd = document.createElement("th");
         newTheadThEnd.classList.add("end");
         newTheadThEnd.textContent = "終了時刻";
         newTheadTr.appendChild(newTheadThEnd);
+        // 休憩時間列
         const newTheadThBreak = document.createElement("th");
         newTheadThBreak.classList.add("break");
         newTheadThBreak.textContent = "休憩時間";
         newTheadTr.appendChild(newTheadThBreak);
+        // 所定内時間列
         const newTheadThNormal = document.createElement("th");
         newTheadThNormal.classList.add("normal");
         newTheadThNormal.innerHTML = "所定内<br>時間";
         newTheadTr.appendChild(newTheadThNormal);
+        // 時間外時間列
         const newTheadThOver = document.createElement("th");
         newTheadThOver.classList.add("over");
         newTheadThOver.innerHTML = "時間外<br>時間";
         newTheadTr.appendChild(newTheadThOver);
+        // 休日時間列
         const newTheadThHoli = document.createElement("th");
         newTheadThHoli.classList.add("holi");
         newTheadThHoli.innerHTML = "休日<br>時間";
         newTheadTr.appendChild(newTheadThHoli);
+        // 深夜時間列
         const newTheadThMid = document.createElement("th");
         newTheadThMid.classList.add("mid");
         newTheadThMid.innerHTML = "深夜<br>(内訳)";
         newTheadTr.appendChild(newTheadThMid);
+        // コメント列
         const newTheadThComment = document.createElement("th");
         newTheadThComment.classList.add("comment");
         newTheadThComment.textContent = "コメント";
@@ -165,16 +206,23 @@ export class CreateKintaiTable {
         return newThead;
     }
 
+    /**
+     * テーブルボディ部作成
+     * @param kintaiInfo 勤怠データ
+     * @returns tbody要素
+     */
     private _tbody(kintaiInfo: KintaiInfo): HTMLTableSectionElement {
         const newTbody = document.createElement("tbody");
         for (let i = 0; i < kintaiInfo.dateList.length; i++) {
             const dateData = kintaiInfo.dateList[i];
             const newTbodyTr = document.createElement("tr");
+            // 日付列
             const newTheadTdDate = document.createElement("td");
             newTheadTdDate.classList.add("date");
             newTheadTdDate.id = `date-${i}`;
             newTheadTdDate.textContent = `${(dateData.date.getMonth() + 1).toString()}/${dateData.date.getDate().toString()}`;
             newTbodyTr.appendChild(newTheadTdDate);
+            // 曜日列
             const newTheadTdDay = document.createElement("td");
             newTheadTdDay.classList.add("day");
             newTheadTdDay.id = `day-${i}`;
@@ -209,6 +257,7 @@ export class CreateKintaiTable {
                     break;
             }
             newTbodyTr.appendChild(newTheadTdDay);
+            // 休日祝日列
             const newTheadTdType = document.createElement("td");
             newTheadTdType.classList.add("type");
             if (dateData.date.getDay() !== DayType.SUNDAY && dateData.date.getDay() !== DayType.SATURDAY) {
@@ -268,6 +317,7 @@ export class CreateKintaiTable {
                 newTheadTdType.appendChild(newTheadTdSelect);
             }
             newTbodyTr.appendChild(newTheadTdType);
+            // 開始時刻列
             const newTheadTdStart = document.createElement("td");
             newTheadTdStart.classList.add("start");
             const newTheadTdStartInput = document.createElement("input");
@@ -327,6 +377,7 @@ export class CreateKintaiTable {
             });
             newTheadTdStart.appendChild(newTheadTdStartButton);
             newTbodyTr.appendChild(newTheadTdStart);
+            // 終了時刻列
             const newTheadTdEnd = document.createElement("td");
             newTheadTdEnd.classList.add("end");
             const newTheadTdEndInput = document.createElement("input");
@@ -433,26 +484,31 @@ export class CreateKintaiTable {
             });
             newTheadTdBreak.appendChild(newTheadTdBreakButton);
             newTbodyTr.appendChild(newTheadTdBreak);
+            // 所定内時間列
             const newTheadTdNormal = document.createElement("td");
             newTheadTdNormal.classList.add("normal");
             newTheadTdNormal.id = `normal-${i}`;
             newTheadTdNormal.textContent = "00:00";
             newTbodyTr.appendChild(newTheadTdNormal);
+            // 時間外時間列
             const newTheadTdOver = document.createElement("td");
             newTheadTdOver.classList.add("over");
             newTheadTdOver.id = `over-${i}`;
             newTheadTdOver.textContent = "00:00";
             newTbodyTr.appendChild(newTheadTdOver);
+            // 休日時間列
             const newTheadTdHoli = document.createElement("td");
             newTheadTdHoli.classList.add("holi");
             newTheadTdHoli.id = `holi-${i}`;
             newTheadTdHoli.textContent = "00:00";
             newTbodyTr.appendChild(newTheadTdHoli);
+            // 深夜時間列
             const newTheadTdMid = document.createElement("td");
             newTheadTdMid.classList.add("mid");
             newTheadTdMid.id = `mid-${i}`;
             newTheadTdMid.textContent = "00:00";
             newTbodyTr.appendChild(newTheadTdMid);
+            // コメント列
             const newTheadTdComment = document.createElement("td");
             newTheadTdComment.classList.add("comment");
             const newTheadTdCommentInput = document.createElement("input");
@@ -467,6 +523,10 @@ export class CreateKintaiTable {
         return newTbody;
     }
 
+    /**
+     * テーブルフッター作成
+     * @returns tfoot要素
+     */
     private _tfoot(): HTMLTableSectionElement {
         const newTfoot = document.createElement("tfoot");
         const newTfootTr = document.createElement("tr");
@@ -476,6 +536,7 @@ export class CreateKintaiTable {
         newTfootTr.appendChild(newTfootTdDay);
         const newTfootTdType = document.createElement("td");
         newTfootTr.appendChild(newTfootTdType);
+        // 合計時間
         const newTfootTdSumData = document.createElement("td");
         newTfootTdSumData.classList.add("sum-data");
         newTfootTdSumData.colSpan = 2;
@@ -486,21 +547,25 @@ export class CreateKintaiTable {
         newTfootTdSum.id = "sum";
         newTfootTdSum.textContent = "0.00";
         newTfootTr.appendChild(newTfootTdSum);
+        // 合計所定内時間
         const newTfootTdNormalSum = document.createElement("td");
         newTfootTdNormalSum.classList.add("sum-data");
         newTfootTdNormalSum.id = "normal-sum";
         newTfootTdNormalSum.textContent = "0.00";
         newTfootTr.appendChild(newTfootTdNormalSum);
+        // 合計時間外時間
         const newTfootTdOverSum = document.createElement("td");
         newTfootTdOverSum.classList.add("sum-data");
         newTfootTdOverSum.id = "over-sum";
         newTfootTdOverSum.textContent = "0.00";
         newTfootTr.appendChild(newTfootTdOverSum);
+        // 合計休日時間
         const newTfootTdHoliSum = document.createElement("td");
         newTfootTdHoliSum.classList.add("sum-data");
         newTfootTdHoliSum.id = "holi-sum";
         newTfootTdHoliSum.textContent = "0.00";
         newTfootTr.appendChild(newTfootTdHoliSum);
+        // 合計深夜時間
         const newTfootTdMidSum = document.createElement("td");
         newTfootTdMidSum.classList.add("sum-data");
         newTfootTdMidSum.id = "mid-sum";
@@ -512,6 +577,10 @@ export class CreateKintaiTable {
         return newTfoot;
     }
 
+    /**
+     * 行合計計算
+     * @param num 行番号
+     */
     private _computeRow(num: string): void {
         const row = document.querySelector(`#date-${num}`)?.parentElement;
 
@@ -527,14 +596,14 @@ export class CreateKintaiTable {
         const holi = document.querySelector(`#holi-${num}`) as HTMLTableCellElement;
         const mid = document.querySelector(`#mid-${num}`) as HTMLTableCellElement;
 
-        if (CheckUtil.isEmpty(startValue) && CheckUtil.isEmpty(endValue) && CheckUtil.isEmpty(breakValue)) {
-            // 全て未入力の場合
+        if (CheckUtil.isEmpty(startValue) || CheckUtil.isEmpty(endValue) || CheckUtil.isEmpty(breakValue)) {
+            // いずれかが未入力の場合
             normal.textContent = "00:00";
             over.textContent = "00:00";
             holi.textContent = "00:00";
             mid.textContent = "00:00";
         } else if (CheckUtil.isInputError(startValue) || CheckUtil.isInputError(endValue) || CheckUtil.isInputError(breakValue)) {
-            // 入力チェックエラーの場合
+            // いずれかが入力チェックエラーの場合
             normal.textContent = "Error";
             over.textContent = "Error";
             holi.textContent = "Error";
@@ -544,9 +613,6 @@ export class CreateKintaiTable {
             const end = endValue.split(':');
             const qk = breakValue.split(':');
             let sumTime = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
-            console.log(`sumTime[${sumTime}]`);
-            console.log(`h[${Math.floor(sumTime)}]`);
-            console.log(`m[${parseFloat("0." + (String(sumTime)).split(".")[1]) * 60}]`);
             if (sumTime > 8 && row?.classList.contains("weekday")) {
                 // 8時間以上 && 平日
                 normal.textContent = "08:00";
@@ -571,13 +637,13 @@ export class CreateKintaiTable {
             }
 
             if (parseInt(start[0]) >= 22 || parseInt(start[0]) < 6) {
-                // 深夜作業の場合
+                // 深夜作業が深夜時間以降に開始の場合
                 const midTime = parseInt(end[0]) - parseInt(start[0]) - parseInt(qk[0]) + (parseInt(end[1]) - parseInt(start[1]) - parseInt(qk[1])) / 60;
                 const h = Math.floor(midTime);
                 const m = parseFloat("0." + (String(midTime)).split(".")[1]) * 60;
                 mid.textContent = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
             } else if (parseInt(end[0]) >= 22 || parseInt(end[0]) < 6) {
-                // 深夜作業の場合
+                // 深夜作業が深夜時間以前に開始の場合
                 const midTime = parseInt(end[0]) - 22 + parseInt(end[1]) / 60;
                 const h = Math.floor(midTime);
                 const m = parseFloat("0." + (String(midTime)).split(".")[1]) * 60;
@@ -586,6 +652,9 @@ export class CreateKintaiTable {
         }
     }
 
+    /**
+     * 列合計計算処理
+     */
     private _computeSum(): void {
         const sumElement = document.querySelector(`#sum`) as HTMLTableCellElement;
         const normalSumElement = document.querySelector(`#normal-sum`) as HTMLTableCellElement;
@@ -599,21 +668,25 @@ export class CreateKintaiTable {
         let holiSum = 0.00;
         let midSum = 0.00;
         for (let i = 0; i < rows.length; i++) {
+            // 合計所定内時間
             const normalElement = rows[i].querySelector(`.normal`);
             const normalValue = normalElement?.textContent?.split(":");
             if (normalValue) {
                 normalSum += (parseInt(normalValue[0]) + parseInt(normalValue[1]) / 60);
             }
+            // 合計時間外時間
             const overElement = rows[i].querySelector(`.over`);
             const overValue = overElement?.textContent?.split(":");
             if (overValue) {
                 overSum += (parseInt(overValue[0]) + parseInt(overValue[1]) / 60);
             }
+            // 合計休日時間
             const holiElement = rows[i].querySelector(`.holi`);
             const holiValue = holiElement?.textContent?.split(":");
             if (holiValue) {
                 holiSum += (parseInt(holiValue[0]) + parseInt(holiValue[1]) / 60);
             }
+            // 合計深夜時間
             const midElement = rows[i].querySelector(`.mid`);
             const midValue = midElement?.textContent?.split(":");
             if (midValue) {

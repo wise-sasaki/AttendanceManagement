@@ -20,7 +20,7 @@
             <p>・ユーザーデータや勤怠データはサーバーにはアップロードされず、ブラウザのindexedDBに保存されます。(ブラウザキャッシュをクリアすると消えるので注意)</p>
             <p>・データ管理：「JSONデータ読込」からJSONデータをローカル読込できます。「全データJSON出力」ボタンでJSONデータをローカル保存できます。</p>
             <p>・勤怠データ一覧：過去の勤怠データを選択します。</p>
-            <p>・勤怠データ：過去の勤怠データを選択します。「定時一括入力」ボタンで開始時刻、終了時刻、休憩時間に自動入力できます。「保存」ボタンで入力情報をブラウザのindexDBに保存します。「PDF出力」で現在表示中の勤怠データをPDFでダウンロードします。
+            <p>・勤怠データ：過去の勤怠データを選択します。「定時一括入力」ボタンで開始時刻、終了時刻、休憩時間に自動入力できます。「保存」ボタンで入力情報をブラウザのindexedDBに保存します。「PDF出力」で現在表示中の勤怠データをPDFでダウンロードします。
             </p>
         </div>
         <div class="data-management box">
@@ -47,23 +47,34 @@
                     <span id="kintai-id"></span>
                 </div>
                 <div class="user-data block">
-                    <label for="company">会社名</label>
-                    <input type="text" id="company" class="user-input" />
-                    <label for="deploy">部署名</label>
-                    <input type="text" id="deploy" class="user-input" />
-                    <label for="name">氏名</label>
-                    <input type="text" id="name" class="user-input" />
+                    <div class="media-400-box">
+                        <label for="company">会社名</label>
+                        <input type="text" id="company" class="user-input" />
+                    </div>
+                    <div class="media-400-box">
+                        <label for="deploy">部署名</label>
+                        <input type="text" id="deploy" class="user-input" />
+                    </div>
+                    <div class="media-400-box">
+                        <label for="name">氏名</label>
+                        <input type="text" id="name" class="user-input" />
+                    </div>
                 </div>
                 <div class="anken-data block">
-                    <label for="anken">案件名</label>
-                    <input type="text" id="anken" class="user-input" />
-                    <label for="teizi-start">所定就業時間</label>
-                    <input type="text" id="teizi-start" class="kinmu-input" pattern="^([01][0-9]|2[0-3]):[0-5][0-9]$"
-                        maxlength="5" placeholder="00:00" />～<input type="text" id="teizi-end" class="kinmu-input"
-                        pattern="^([01][0-9]|2[0-3]):[0-5][0-9]$" maxlength="5" placeholder="00:00" />
-                    <label for="qk">休憩時間</label>
-                    <input type="text" id="qk" class="kinmu-input" pattern="^([01][0-9]|2[0-3]):[0-5][0-9]$"
-                        maxlength="5" placeholder="01:00" />
+                    <div class="media-400-box">
+                        <label for="anken">案件名</label>
+                        <input type="text" id="anken" class="user-input" />
+                    </div>
+                    <div class="media-400-box">
+                        <label for="teizi-start">所定就業時間</label>
+                        <input type="text" id="teizi-start" class="kinmu-input"
+                            pattern="^([01][0-9]|2[0-3]):[0-5][0-9]$" maxlength="5" placeholder="00:00" />～<input
+                            type="text" id="teizi-end" class="kinmu-input" pattern="^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                            maxlength="5" placeholder="00:00" />
+                        <label for="qk">休憩時間</label>
+                        <input type="text" id="qk" class="kinmu-input" pattern="^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                            maxlength="5" placeholder="01:00" />
+                    </div>
                 </div>
                 <div class="tool block">
                     <button type="button" id="bulk-data" class="user-button">定時一括入力</button>

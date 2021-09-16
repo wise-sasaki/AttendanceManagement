@@ -3,12 +3,19 @@ import { DateInfo } from "./DateInfo";
 import { KintaiInfo } from "./KintaiInfo";
 import { CreateKintaiTable } from "./CreateKintaiTable";
 import { DataSelectList } from "./DataSelectList";
+/**
+ * 勤怠データ新規作成クラス
+ */
 export class NewData {
     private date: string = "";
 
     constructor() {
         this._addEventListener();
     }
+
+    /**
+     * イベントハンドラー登録処理
+     */
     private _addEventListener(): void {
         const month = document.getElementById("new-date");
         month?.addEventListener("change", (event: any) => {
@@ -75,6 +82,12 @@ export class NewData {
         });
     }
 
+    /**
+     * 勤怠データ新規作成処理
+     * @param year 年
+     * @param month 月
+     * @returns 勤怠データ
+     */
     private _newKintaiInfo(year: string, month: string): KintaiInfo {
         const firstDay = new Date(parseInt(year), parseInt(month) - 1, 1);
         const lastDay = new Date(parseInt(year), parseInt(month), 0);

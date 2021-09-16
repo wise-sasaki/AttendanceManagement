@@ -1,5 +1,10 @@
 import { DAO } from "./DAO";
 import { KintaiInfo } from "./KintaiInfo";
+/**
+ * 全データJSON出力ボタンクラス
+ * 
+ * indexedDBに登録されている勤怠データをJSONファイルとして作成してダウンロードする。
+ */
 export class OutputJsonButton {
     constructor() {
         this._addEventListener();
