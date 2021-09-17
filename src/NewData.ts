@@ -33,20 +33,20 @@ export class NewData {
                 // 存在チェック
                 const year = this.date.split("-")[0];
                 const month = this.date.split("-")[1];
-                const cleck = await dao.selectById(`${year}${month}`);
+                const cleck = await dao.findById(`${year}${month}`);
                 if (cleck.kintaiId == null || cleck.kintaiId === "") {
                     // 新規データ作成
                     const kintaiInfo = this._newKintaiInfo(year, month);
 
                     // 新規登録
-                    await dao.create(kintaiInfo);
+                    await dao.insert(kintaiInfo);
 
                     // 再取得
-                    const info = await dao.selectById(`${year}${month}`);
+                    const info = await dao.findById(`${year}${month}`);
 
                     // 勤怠表作成
                     const kintaiList = new CreateKintaiTable();
-                    await kintaiList.create(info);
+                    kintaiList.create(info);
 
                     // 勤怠データ選択リスト作成
                     new DataSelectList(`${year}${month}`);
@@ -61,14 +61,14 @@ export class NewData {
                         const kintaiInfo = this._newKintaiInfo(year, month);
 
                         // 上書き登録
-                        await dao.create(kintaiInfo);
+                        await dao.insert(kintaiInfo);
 
                         // 再取得
-                        const info = await dao.selectById(`${year}${month}`);
+                        const info = await dao.findById(`${year}${month}`);
 
                         // 勤怠表作成
                         const kintaiList = new CreateKintaiTable();
-                        await kintaiList.create(info);
+                        kintaiList.create(info);
 
                         // 勤怠データ選択リスト作成
                         new DataSelectList(`${year}${month}`);
@@ -89,7 +89,6 @@ export class NewData {
      * @returns 勤怠データ
      */
     private _newKintaiInfo(year: string, month: string): KintaiInfo {
-        const firstDay = new Date(parseInt(year), parseInt(month) - 1, 1);
         const lastDay = new Date(parseInt(year), parseInt(month), 0);
         const kintaiInfo = new KintaiInfo();
         kintaiInfo.kintaiId = `${year}${month}`

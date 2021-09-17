@@ -33,6 +33,9 @@ h1 {
     margin-bottom: 10px;
     color: #F8B13C;
 }
+.block {
+    margin-bottom: 10px;
+}
 .box {
     position: relative;
     margin: 0 auto;
@@ -59,9 +62,6 @@ h1 {
     background-color: #1F1B1D;
     color: #F8B13C;
     letter-spacing: 0.1em;
-}
-.block {
-    margin-bottom: 10px;
 }
 .user-data-box {
     display: inline;
@@ -298,6 +298,7 @@ tfoot .sum-data {
     background-color: #1F1B1D;
 }
 
+/* レスポンシブ対応 */
 @media screen and (min-width:321px) and (max-width:480px) {
     .data-management {
         display: none;

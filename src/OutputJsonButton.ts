@@ -14,7 +14,7 @@ export class OutputJsonButton {
         button?.addEventListener("click", async (event: any) => {
             // DB接続 全件取得
             const dao = DAO.getInstance();
-            const list: Array<KintaiInfo> = await dao.selectAll();
+            const list: Array<KintaiInfo> = await dao.findAll();
             // JSON変換
             const json = JSON.stringify(list);
             // ファイル作成

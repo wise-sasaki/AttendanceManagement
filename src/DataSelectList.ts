@@ -28,7 +28,7 @@ export class DataSelectList {
 
         // DB接続
         const dao = DAO.getInstance();
-        const list: Array<KintaiInfo> = await dao.selectAll();
+        const list: Array<KintaiInfo> = await dao.findAll();
 
         for (let i = 0; i < list.length; i++) {
             const kintaiOption = document.createElement("option");
@@ -61,7 +61,7 @@ export class DataSelectList {
                 newBox?.classList.add("element-hidden");
                 // DB接続
                 const dao = DAO.getInstance();
-                const info: KintaiInfo = await dao.selectById(key);
+                const info: KintaiInfo = await dao.findById(key);
                 // テーブル作成
                 const kintaiList = new CreateKintaiTable();
                 kintaiList.create(info);

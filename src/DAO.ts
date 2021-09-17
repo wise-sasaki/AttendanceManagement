@@ -38,7 +38,7 @@ export class DAO {
      * @param kintaiInfo 勤怠データ
      * @returns 
      */
-    public async create(kintaiInfo: KintaiInfo): Promise<void> {
+    public async insert(kintaiInfo: KintaiInfo): Promise<void> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
             let db: IDBDatabase;
@@ -85,7 +85,7 @@ export class DAO {
      * @param key プライマリーKey
      * @returns 
      */
-    public async selectById(key: string): Promise<KintaiInfo> {
+    public async findById(key: string): Promise<KintaiInfo> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
             let db: IDBDatabase;
@@ -135,7 +135,7 @@ export class DAO {
      * 勤怠データ一覧取得処理
      * @returns 
      */
-    public async selectAll(): Promise<Array<KintaiInfo>> {
+    public async findAll(): Promise<Array<KintaiInfo>> {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(DAO.DB_NAME, 1);
             let db: IDBDatabase;

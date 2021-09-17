@@ -584,16 +584,23 @@ export class CreateKintaiTable {
     private _computeRow(num: string): void {
         const row = document.querySelector(`#date-${num}`)?.parentElement;
 
+        // 開始時刻の値取得
         const startElement = document.querySelector(`#start-${num}`) as HTMLInputElement;
         const startValue = startElement.value;
+        // 終了時刻の値取得
         const endElement = document.querySelector(`#end-${num}`) as HTMLInputElement;
         const endValue = endElement.value;
+        // 休憩時間の値取得
         const breakElement = document.querySelector(`#break-${num}`) as HTMLInputElement;
         const breakValue = breakElement.value;
 
+        // 所定内時間
         const normal = document.querySelector(`#normal-${num}`) as HTMLTableCellElement;
+        // 時間外時間
         const over = document.querySelector(`#over-${num}`) as HTMLTableCellElement;
+        // 休日時間
         const holi = document.querySelector(`#holi-${num}`) as HTMLTableCellElement;
+        // 深夜時間
         const mid = document.querySelector(`#mid-${num}`) as HTMLTableCellElement;
 
         if (CheckUtil.isEmpty(startValue) || CheckUtil.isEmpty(endValue) || CheckUtil.isEmpty(breakValue)) {
@@ -609,6 +616,7 @@ export class CreateKintaiTable {
             holi.textContent = "Error";
             mid.textContent = "Error";
         } else if (!CheckUtil.isEmpty(startValue) && !CheckUtil.isEmpty(endValue) && !CheckUtil.isEmpty(breakValue)) {
+            // 全て入力がされている場合
             const start = startValue.split(':');
             const end = endValue.split(':');
             const qk = breakValue.split(':');
@@ -668,34 +676,38 @@ export class CreateKintaiTable {
         let holiSum = 0.00;
         let midSum = 0.00;
         for (let i = 0; i < rows.length; i++) {
-            // 合計所定内時間
+            // 合計所定内時間の計算
             const normalElement = rows[i].querySelector(`.normal`);
             const normalValue = normalElement?.textContent?.split(":");
             if (normalValue) {
                 normalSum += (parseInt(normalValue[0]) + parseInt(normalValue[1]) / 60);
             }
-            // 合計時間外時間
+            // 合計時間外時間の計算
             const overElement = rows[i].querySelector(`.over`);
             const overValue = overElement?.textContent?.split(":");
             if (overValue) {
                 overSum += (parseInt(overValue[0]) + parseInt(overValue[1]) / 60);
             }
-            // 合計休日時間
+            // 合計休日時間の計算
             const holiElement = rows[i].querySelector(`.holi`);
             const holiValue = holiElement?.textContent?.split(":");
             if (holiValue) {
                 holiSum += (parseInt(holiValue[0]) + parseInt(holiValue[1]) / 60);
             }
-            // 合計深夜時間
+            // 合計深夜時間の計算
             const midElement = rows[i].querySelector(`.mid`);
             const midValue = midElement?.textContent?.split(":");
             if (midValue) {
                 midSum += (parseInt(midValue[0]) + parseInt(midValue[1]) / 60);
             }
         }
+        // 所定内時間の値設定
         normalSumElement.textContent = normalSum.toFixed(2);
+        // 合計時間外時間の値設定
         overSumElement.textContent = overSum.toFixed(2);
+        // 合計休日時間の値設定
         holiSumElement.textContent = holiSum.toFixed(2);
+        // 合計深夜時間の値設定
         midSumElement.textContent = midSum.toFixed(2);
 
         sumElement.textContent = (normalSum + overSum + holiSum).toFixed(2);
